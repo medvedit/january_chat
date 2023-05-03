@@ -15,7 +15,7 @@ public class HistoryMaker {
         this.login = login;
         //история записывается в файл по имени пользователя - login
         this.history = new File(HISTORY_PATH + "history_" + login + ".txt");
-        //если пользователь еще без истории, нет католога, то мы его создаем
+        //если пользователь еще без истории, нет каталога, то мы его создаем
         if (!history.exists()) {//проверка
             //создание файла
             File path = new File(HISTORY_PATH);
@@ -53,16 +53,17 @@ public class HistoryMaker {
                 e.printStackTrace();
             }
         }
-        System.out.println("История сообщений для: " +login +" - "+ result.size()+ " строк" );
+        System.out.println("История сообщений для: " + login + " - " + result.size() + " строк" );
         return result;
     }
     //метод для записи истории
     public void writeHistory(String message) {
         //контроллер передает сообщение, и записываем в файл
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(history, true))) {//добавляем новые записи в конец файла при помощи флага true
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(history, true))) { //добавляем
+                                                                   // новые записи в конец файла при помощи флага true
             writer.write(message);
         } catch (IOException e) {
-            e.printStackTrace();//ловим
+            e.printStackTrace(); //ловим
         }
     }
 }

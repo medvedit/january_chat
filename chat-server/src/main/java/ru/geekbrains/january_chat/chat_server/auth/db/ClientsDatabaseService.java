@@ -59,7 +59,7 @@ public class ClientsDatabaseService {
 
 
 
-    //авторизация, используем PreparedStatement- для безопастности
+    //авторизация, используем PreparedStatement- для безопасности
     public String getClientsNameByLoginPass(String login, String pass) {//подключение к БД из таб. клиентов строка юзеров
         try (PreparedStatement ps = connection.prepareStatement(GET_USERNAME))
         {
@@ -76,8 +76,8 @@ public class ClientsDatabaseService {
             }
 
         }catch (SQLException e){
-            e.printStackTrace();//если что то не так то выводится исключение
-        }throw new WrongCredentialsException();//если запрос в БД не дал результатов, то выбрасываем исключение что ни чего не найдено
+            e.printStackTrace();//если что-то не так, то выводится исключение
+        }throw new WrongCredentialsException();//если запрос в БД не дал результатов, то выбрасываем исключение, что ни чего не найдено
     }
 
     private void connect()throws ClassNotFoundException, SQLException{

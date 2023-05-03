@@ -112,7 +112,7 @@ public class MainChatController implements Initializable, MessageProcessor {
                 this.nick = splitMessage[1];
                 loginPanel.setVisible(false);
                 mainChatPanel.setVisible(true);
-                //инициализация historyMaker после того как клиент успешно авторизовался
+                //инициализация historyMaker после того, как клиент успешно авторизовался,
                 //так как имя файла истории = логину клиента
                 this.historyMaker = new HistoryMaker(nick);
                 //получаем прошлую историю
@@ -384,7 +384,7 @@ public class MainChatController implements Initializable, MessageProcessor {
             return;//ни чего не происходит
         }
 
-        //но если есть что то, он не пустой то дастаем из контакт листа ListView, через
+        //но если есть что то, он не пустой то достаем из контакт листа ListView, через
         //getSelectionModel() достаем выбранный объект
         //далее добавляем этот объект recipient + а так же сообщение
                var recipient = contactList.getSelectionModel().getSelectedItem();
@@ -397,7 +397,7 @@ public class MainChatController implements Initializable, MessageProcessor {
 
     @Override     //выполняется на старте контроллера, заполняется..
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //на старте приложения вложем фейковый список контактов
+        //на старте приложения вложим фейковый список контактов
         var contacts = new ArrayList<String>();
         contacts.add("ALL:");    //выбор всех контактов
         for (int i = 0; i < 10; i ++) {

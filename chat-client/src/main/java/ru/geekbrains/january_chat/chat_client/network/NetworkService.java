@@ -65,8 +65,6 @@ public class NetworkService {
             e.printStackTrace();
         }
     }
-
-
 }
 
 
@@ -99,7 +97,7 @@ public class NetworkService {
         this.messageProcessor = messageProcessor;
     }
 
-    //создает соединение сокет, он не слушает порт а просто говорит о запросе , соединие в сервер сокет, создается сокет
+    //создает соединение сокет, он не слушает порт, а просто говорит о запросе, соединения в сервер сокет, создается сокет
     public void connect() throws IOException {
         this.socket = new Socket(HOST, PORT);
         this.in = new DataInputStream(socket.getInputStream());
@@ -111,7 +109,7 @@ public class NetworkService {
     public void readMessages() {
         var thread = new Thread(() -> {
             try {
-                //когда было полученно сообщение мы его отдаем messageProcessor
+                //когда было получено сообщение мы его отдаем messageProcessor
                 while (!Thread.currentThread().isInterrupted() && !socket.isClosed()) {
                     var message = in.readUTF();
                     messageProcessor.processMessage(message);
@@ -139,7 +137,6 @@ public class NetworkService {
     public boolean isConnected() {
         return socket != null && !socket.isClosed();
     }
-
     //метод закрытие
     public void close() {
         try {
@@ -150,7 +147,5 @@ public class NetworkService {
             e.printStackTrace();
         }
     }
-
-
 }
 */
