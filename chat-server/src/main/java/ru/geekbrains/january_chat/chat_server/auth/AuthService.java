@@ -2,7 +2,7 @@ package ru.geekbrains.january_chat.chat_server.auth;
 
 import ru.geekbrains.january_chat.chat_server.entity.User;
 //интерфейс описывает как нужно работать серверу, авторизация и т.д.
-public interface AuthService {
+public interface  AuthService {
     void start();
     void stop();
     String authorizeUserByLoginAndPassword(String login, String password);

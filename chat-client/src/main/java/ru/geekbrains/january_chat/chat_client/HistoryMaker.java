@@ -23,30 +23,29 @@ public class HistoryMaker {
         }
     }
 
-    public List<String> readHistory() {
-        //проверяем если истории нет, то выводим сообщение: нет истории сообщений
-        if (!history.exists())
-            return Collections.singletonList("У вас еще нет истории сообщений");
+    public List<String> readHistory() { // Метод считывания истории сообщений, зарегистрированного пользователя, из
+                                        // текстового файла.
+        if (!history.exists()) // проверяем если истории нет, то...
+            return Collections.singletonList("У вас еще нет истории сообщений"); // Выводим сообщение: нет истории сообщений.
         List<String> result = null;
-        //если история имеется, то читаем наш файл методом BufferedReader/экономит ресурсы
-        if (history.exists()) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(history))) {
+        if (history.exists()) { //если история имеется, то...
+            try (BufferedReader reader = new BufferedReader(new FileReader(history))) { // Читаем наш файл
+                                                                             // методом BufferedReader/экономит ресурсы
                 String historyString;
-                //чтение файла происходит построчно,
-                List<String> historyStrings = new ArrayList<>();
+                List<String> historyStringUser = new ArrayList<>();
                 //имеется в виду, что сообщение занимает не больше 1 строки
-                while ((historyString = reader.readLine()) != null) {
-                    historyStrings.add(historyString); //add - добавляем результат
-                }//если в сообщении меньше 100 строк, то все их и выводим
-                if (historyStrings.size() <= SIZE_OF_RETRIEVED_HISTORY) {
-                    result = historyStrings;
+                while ((historyString = reader.readLine()) != null) { //чтение файла происходит построчно,
+                    historyStringUser.add(historyString); //add - добавляем результат
+                }
+                if (historyStringUser.size() <= SIZE_OF_RETRIEVED_HISTORY) { //если в сообщении меньше 100 строк, то...
+                    result = historyStringUser; // Все их и выводим.
                 }//если в сообщении больше 100 строк, то обрезаем
-                if (historyStrings.size() > SIZE_OF_RETRIEVED_HISTORY) {
-                    int firstIndex = historyStrings.size() - SIZE_OF_RETRIEVED_HISTORY;
+                if (historyStringUser.size() > SIZE_OF_RETRIEVED_HISTORY) { //если в сообщении больше 100 строк, то...
+                    int firstIndex = historyStringUser.size() - SIZE_OF_RETRIEVED_HISTORY; // обрезаем историю
                     result = new ArrayList<>(SIZE_OF_RETRIEVED_HISTORY);
 
-                    for (int counter = firstIndex - 1; counter < historyStrings.size(); counter++) {
-                        result.add(historyStrings.get(counter));
+                    for (int counter = firstIndex - 1; counter < historyStringUser.size(); counter++) {
+                        result.add(historyStringUser.get(counter));
                     }
                 }
             } catch (IOException e) {
@@ -57,13 +56,13 @@ public class HistoryMaker {
         return result;
     }
     //метод для записи истории
-    public void writeHistory(String message) {
-        //контроллер передает сообщение, и записываем в файл
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(history, true))) { //добавляем
-                                                                   // новые записи в конец файла при помощи флага true
+    public void writeHistory(String message) { // Метод сохранения истории сообщения в текстовый файл.
+                                               // Контроллер передает сообщение, и записываем в файл
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(history, true))) { // Добавляем
+            // историю пользователя в текстовый файл. Флаг true - не перезатирает записи сообщений при последующих сессиях.
             writer.write(message);
         } catch (IOException e) {
-            e.printStackTrace(); //ловим
+            e.printStackTrace();
         }
     }
 }
