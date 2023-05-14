@@ -1,24 +1,30 @@
 package ru.geekbrains.january_chat.chat_server.server;
 
 import ru.geekbrains.january_chat.chat_server.auth.AuthService;
-import ru.geekbrains.january_chat.props.PropertyReader;
-
 import java.io.IOException;
 import java.net.ServerSocket;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class Server {
+public class  Server {
     public static final String REGEX = "%!%";
     private final int port = 8189;
     private final AuthService authService;
     private final List<ClientHandler> clientHandlers;
+    private final ExecutorService executorService;
 
     public Server(AuthService authService) {
-        // port = PropertyReader.getInstance().getPort();
+//         port = PropertyReader.getInstance().getPort();
         this.clientHandlers = new ArrayList<>();
         this.authService = authService;
+        this.executorService = Executors.newCachedThreadPool();
+    }
+
+    public Executor getExecutorService() {
+        return executorService;
     }
 
     public void start() {
@@ -31,8 +37,6 @@ public class Server {
                 System.out.println("Client connected");
                 var clientHandler = new ClientHandler(socket, this);
                 clientHandler.handle();
-
-
             }
         } catch (IOException e) {
             e.printStackTrace();

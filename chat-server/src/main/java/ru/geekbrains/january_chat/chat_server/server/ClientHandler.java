@@ -1,6 +1,5 @@
 package ru.geekbrains.january_chat.chat_server.server;
 
-import ru.geekbrains.january_chat.chat_server.auth.AuthService;
 import ru.geekbrains.january_chat.chat_server.error.WrongCredentialsException;
 import ru.geekbrains.january_chat.props.PropertyReader;
 
@@ -8,7 +7,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -35,7 +33,8 @@ public class ClientHandler {
     }
 
     public void handle() {
-        handlerThread = new Thread(() -> {
+//        handlerThread = new Thread(() -> { //  удалил после добавления ExecutorService в chat_server.server.server
+        server.getExecutorService().execute(() -> {
             authorize();
             while (!Thread.currentThread().isInterrupted() && !socket.isClosed()) {
                 try {
@@ -43,11 +42,11 @@ public class ClientHandler {
                     handleMessage(message);
                 } catch (IOException e) {
                     System.out.println("Connection broken with user " + user);
-                    server.removeAuthorizedClientFromList(this);break;
+                    server.removeAuthorizedClientFromList(this);
                 }
             }
         });
-        handlerThread.start();
+//        handlerThread.start(); // соответственно при использовании newCachedThreadPool -> .start() не нужен
     }
 
     private void handleMessage(String message) {
